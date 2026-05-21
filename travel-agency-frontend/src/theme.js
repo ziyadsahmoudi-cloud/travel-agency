@@ -1,0 +1,17 @@
+export const C = {
+  sand: "#F5F0E8",
+  sandDark: "#E8E0D0",
+  ink: "#1A1612",
+  inkMid: "#4A4540",
+  inkLight: "#8A8480",
+  gold: "#C8921A",
+  goldLight: "#F0D080",
+  goldPale: "#FBF3DC",
+  teal: "#1D6E6A",
+  tealLight: "#E0F0EF",
+  white: "#FFFFFF",
+  danger: "#B03020",
+  dangerBg: "#FCE8E5",
+  success: "#1A7A40",
+  successBg: "#E4F5EC",
+};
