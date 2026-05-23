@@ -4,25 +4,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\TravelController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TravelerController;
 use App\Models\Tour;
 use App\Models\Travel;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-/**
- * Authenticated Routes
- */
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('admin/users/create', [UserController::class, 'store'])
         ->name('users.store')
@@ -36,19 +23,35 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('editor/travels/{travel}/update', 'update')
             ->name('travel.update')
             ->can('update', 'travel');
+            
+        Route::delete('admin/travels/{travel}', 'destroy')
+            ->name('travel.destroy')
+            ->can('update', 'travel');
     });
 
-    Route::post('admin/travels/{travel}/tours/create', [TourController::class, 'store'])
-        ->name('tours.store')
-        ->can('create', Tour::class);
+    Route::controller(TourController::class)->group(function () {
+        Route::post('admin/travels/{travel}/tours/create', 'store')
+            ->name('tours.store')
+            ->can('create', Tour::class);
+            
+        Route::patch('admin/travels/{travel}/tours/{tour}/update', 'update')
+            ->name('tours.update')
+            ->can('create', Tour::class);
+            
+        Route::delete('admin/travels/{travel}/tours/{tour}', 'destroy')
+            ->name('tours.destroy')
+            ->can('create', Tour::class);
+    });
+
+    Route::controller(TravelerController::class)->group(function () {
+        Route::get('admin/tours/{tour}/travelers', 'index')->name('travelers.index')->can('create', Tour::class);
+        Route::post('admin/tours/{tour}/travelers', 'store')->name('travelers.store')->can('create', Tour::class);
+        Route::delete('admin/tours/{tour}/travelers/{traveler}', 'destroy')->name('travelers.destroy')->can('create', Tour::class);
+    });
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-/**
- * Public Routes
- */
 Route::post('login', [AuthController::class, 'login'])->name('login');
-
 Route::get('travels', [TravelController::class, 'index'])->name('travel.index');
 Route::get('tours/{travel}', [TourController::class, 'index'])->name('tours.index');

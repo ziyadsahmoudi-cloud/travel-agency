@@ -21,11 +21,11 @@ const AdminUsers = ({ toast }) => {
     setSaving(true);
     try {
       await createUser(form, token);
-      toast("User created successfully!", "success");
+      toast("Utilisateur créé avec succès !", "success");
       setModal(false);
       setForm(EMPTY_FORM);
     } catch (e) {
-      toast(e.message || "Error creating user.", "error");
+      toast(e.message || "Erreur lors de la création de l'utilisateur.", "error");
     }
     setSaving(false);
   };
@@ -33,7 +33,7 @@ const AdminUsers = ({ toast }) => {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 18 }}>
-        <Button onClick={() => setModal(true)} variant="teal">+ New User</Button>
+        <Button onClick={() => setModal(true)} variant="teal">+ Nouvel Utilisateur</Button>
       </div>
 
       {/* Info card */}
@@ -43,17 +43,17 @@ const AdminUsers = ({ toast }) => {
         borderRadius: 10, padding: "20px 24px",
       }}>
         <h4 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 17, margin: "0 0 8px", color: C.ink }}>
-          User Management
+          Gestion des Utilisateurs
         </h4>
         <p style={{ margin: 0, color: C.inkMid, fontSize: 14, lineHeight: 1.65 }}>
-          Create new editors or admins using the button above. Editors can update travels.
-          Admins can also create travels, tours, and users. User listing is not exposed via
-          the public API — manage accounts here.
+          Créez de nouveaux éditeurs ou administrateurs à l'aide du bouton ci-dessus. Les éditeurs peuvent modifier les voyages.
+          Les administrateurs peuvent également créer des voyages, des circuits et des utilisateurs. La liste des utilisateurs n'est pas exposée via
+          l'API publique — gérez les comptes ici.
         </p>
         <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
           {[
-            { role: "Editor", desc: "Can update existing travels" },
-            { role: "Admin", desc: "Can create travels, tours, users — and has all editor permissions" },
+            { role: "Éditeur", desc: "Peut modifier les voyages existants" },
+            { role: "Administrateur", desc: "Peut créer des voyages, des circuits, des utilisateurs — et possède toutes les permissions d'éditeur" },
           ].map(({ role, desc }) => (
             <div key={role} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
               <span style={{
@@ -72,20 +72,20 @@ const AdminUsers = ({ toast }) => {
 
       {/* Create user modal */}
       {modal && (
-        <Modal title="Create User" onClose={() => setModal(false)}>
+        <Modal title="Créer un Utilisateur" onClose={() => setModal(false)}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <Input label="Full name" value={form.name} onChange={setField("name")} />
-            <Input label="Email" type="email" value={form.email} onChange={setField("email")} />
-            <Input label="Password" type="password" value={form.password} onChange={setField("password")} />
-            <Select label="Role" value={form.role} onChange={setField("role")}>
-              <option value="editor">Editor</option>
-              <option value="admin">Admin</option>
+            <Input label="Nom complet" value={form.name} onChange={setField("name")} />
+            <Input label="E-mail" type="email" value={form.email} onChange={setField("email")} />
+            <Input label="Mot de passe" type="password" value={form.password} onChange={setField("password")} />
+            <Select label="Rôle" value={form.role} onChange={setField("role")}>
+              <option value="editor">Éditeur</option>
+              <option value="admin">Administrateur</option>
             </Select>
             <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
               <Button onClick={submit} disabled={saving} variant="teal">
-                {saving ? "Creating…" : "Create User"}
+                {saving ? "Création…" : "Créer un Utilisateur"}
               </Button>
-              <Button onClick={() => setModal(false)} variant="outline">Cancel</Button>
+              <Button onClick={() => setModal(false)} variant="outline">Annuler</Button>
             </div>
           </div>
         </Modal>

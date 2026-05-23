@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getTravels, createTravel, updateTravel } from "../../api/client";
+import { getTravels, createTravel, updateTravel, deleteTravel } from "../../api/client";
 import { useAuth } from "../../context/AuthContext";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
@@ -17,7 +17,8 @@ const AdminTravels = ({ toast }) => {
   const [meta, setMeta] = useState(null);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [modal, setModal] = useState(null); // null | "create" | { edit: travel }
+  const [modal, setModal] = useState(null); 
+  const [deleteModal, setDeleteModal] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
   const [saving, setSaving] = useState(false);
 
@@ -48,16 +49,29 @@ const AdminTravels = ({ toast }) => {
       const payload = { ...form, number_of_days: Number(form.number_of_days) };
       if (modal === "create") {
         await createTravel(payload, token);
-        toast("Travel created successfully!", "success");
+        toast("Voyage créé avec succès !", "success");
       } else {
         await updateTravel(modal.edit.slug, payload, token);
-        toast("Travel updated!", "success");
+        toast("Voyage modifié !", "success");
       }
       setModal(null);
       setPage(1);
       fetch_(1);
     } catch (e) {
-      toast(e.message || "Error saving travel.", "error");
+      toast(e.message || "Erreur lors de l'enregistrement du voyage.", "error");
+    }
+    setSaving(false);
+  };
+
+  const confirmDelete = async () => {
+    setSaving(true);
+    try {
+      await deleteTravel(deleteModal.slug, token);
+      toast("Voyage supprimé avec succès !", "success");
+      setDeleteModal(null);
+      fetch_(page);
+    } catch (e) {
+      toast(e.message || "Erreur lors de la suppression du voyage.", "error");
     }
     setSaving(false);
   };
@@ -66,14 +80,14 @@ const AdminTravels = ({ toast }) => {
     <div>
       {isAdmin && (
         <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 18 }}>
-          <Button onClick={openCreate} variant="teal">+ New Travel</Button>
+          <Button onClick={openCreate} variant="teal">+ Nouveau Voyage</Button>
         </div>
       )}
 
       {loading ? <Spinner /> : (
         <>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {travels.length === 0 && <p style={{ color: C.inkLight }}>No travels yet.</p>}
+            {travels.length === 0 && <p style={{ color: C.inkLight }}>Aucun voyage pour l'instant.</p>}
             {travels.map((t) => (
               <div key={t.id} style={{
                 background: C.white, border: `1.5px solid ${C.sandDark}`,
@@ -86,11 +100,16 @@ const AdminTravels = ({ toast }) => {
                     <h4 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 17, margin: 0, color: C.ink }}>
                       {t.name}
                     </h4>
-                    <Badge>{t.number_of_days}d</Badge>
+                    <Badge>{t.number_of_days}j</Badge>
                   </div>
                   <span style={{ fontSize: 12, color: C.inkLight }}>/{t.slug}</span>
                 </div>
-                <Button variant="outline" size="sm" onClick={() => openEdit(t)}>Edit</Button>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <Button variant="outline" size="sm" onClick={() => openEdit(t)}>Modifier</Button>
+                  {isAdmin && (
+                    <Button variant="outline" size="sm" style={{ color: "red", borderColor: "red" }} onClick={() => setDeleteModal(t)}>Supprimer</Button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -99,9 +118,9 @@ const AdminTravels = ({ toast }) => {
       )}
 
       {modal && (
-        <Modal title={modal === "create" ? "New Travel" : "Edit Travel"} onClose={() => setModal(null)}>
+        <Modal title={modal === "create" ? "Nouveau Voyage" : "Modifier le voyage"} onClose={() => setModal(null)}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <Input label="Name" value={form.name} onChange={setField("name")} />
+            <Input label="Nom" value={form.name} onChange={setField("name")} />
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <label style={{ fontSize: 12, fontWeight: 600, color: C.inkMid, letterSpacing: "0.05em", textTransform: "uppercase" }}>
                 Description
@@ -119,19 +138,31 @@ const AdminTravels = ({ toast }) => {
                 }}
               />
             </div>
-            <Input label="Number of days" type="number" value={form.number_of_days} onChange={setField("number_of_days")} />
+            <Input label="Nombre de jours" type="number" value={form.number_of_days} onChange={setField("number_of_days")} />
             {isAdmin && (
               <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 15, cursor: "pointer" }}>
                 <input type="checkbox" checked={form.is_public} onChange={setField("is_public")} />
-                <span>Public (visible to all)</span>
+                <span>Public (visible par tous)</span>
               </label>
             )}
             <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
               <Button onClick={submit} disabled={saving} variant="teal">
-                {saving ? "Saving…" : "Save Travel"}
+                {saving ? "Enregistrement…" : "Enregistrer le voyage"}
               </Button>
-              <Button onClick={() => setModal(null)} variant="outline">Cancel</Button>
+              <Button onClick={() => setModal(null)} variant="outline">Annuler</Button>
             </div>
+          </div>
+        </Modal>
+      )}
+
+      {deleteModal && (
+        <Modal title="Supprimer ce voyage" onClose={() => setDeleteModal(null)}>
+          <p>Êtes-vous sûr de vouloir supprimer ce voyage ? Cette action est irréversible.</p>
+          <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
+            <Button onClick={confirmDelete} disabled={saving} variant="teal" style={{ background: "red", color: "white" }}>
+              {saving ? "Suppression…" : "Confirmer"}
+            </Button>
+            <Button onClick={() => setDeleteModal(null)} variant="outline">Annuler</Button>
           </div>
         </Modal>
       )}

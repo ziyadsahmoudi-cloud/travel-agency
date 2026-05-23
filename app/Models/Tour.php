@@ -9,63 +9,48 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin IdeHelperTour
- */
 class Tour extends Model
 {
     use HasFactory, HasUuids;
 
-    /** Fillables */
     protected $fillable = [
         'name',
         'start_date',
-        'end_date',
         'price',
+        'capacity',
     ];
 
-    /** Casts */
     protected $casts = [
         'start_date' => 'date:Y-m-d',
-        'end_date' => 'date:Y-m-d',
     ];
 
-    /**
-     * @return BelongsTo<Travel,Tour>
-     */
     public function travel(): BelongsTo
     {
         return $this->belongsTo(Travel::class);
     }
 
-    /**
-     * @param  Builder<Model>  $query
-     */
+    public function travelers(): HasMany
+    {
+        return $this->hasMany(Traveler::class);
+    }
+
     public function scopePriceFrom(Builder $query, string $price): void
     {
         $query->where('price', '>=', (float) $price * 100);
     }
 
-    /**
-     * @param  Builder<Model>  $query
-     */
     public function scopePriceTo(Builder $query, string $price): void
     {
         $query->where('price', '<=', (float) $price * 100);
     }
 
-    /**
-     * @param  Builder<Model>  $query
-     */
     public function scopeDateFrom(Builder $query, Carbon $startDate): void
     {
         $query->where('start_date', '>=', $startDate);
     }
 
-    /**
-     * @param  Builder<Model>  $query
-     */
     public function scopeDateTo(Builder $query, Carbon $startDate): void
     {
         $query->where('start_date', '<=', $startDate);
@@ -76,6 +61,15 @@ class Tour extends Model
         return Attribute::make(
             get: fn ($value) => $value / 100,
             set: fn ($value) => $value * 100,
+        );
+    }
+
+    protected function endDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Carbon::parse($this->start_date)
+                ->addDays($this->travel->number_of_days - 1)
+                ->format('Y-m-d'),
         );
     }
 }

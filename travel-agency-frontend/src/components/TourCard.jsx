@@ -16,8 +16,11 @@ const TourCard = ({ tour }) => (
       }}>
         {tour.name}
       </h4>
-      <span style={{ fontSize: 13, color: C.inkMid }}>
-        📅 {tour.start_date} → {tour.end_date}
+      <span style={{ fontSize: 13, color: C.inkMid, display: "block", marginBottom: 4 }}>
+        📅 Du {tour.start_date} au {tour.end_date}
+      </span>
+      <span style={{ fontSize: 13, color: C.teal, fontWeight: "bold" }}>
+        Capacité : {tour.capacity} voyageurs
       </span>
     </div>
     <div style={{ textAlign: "right" }}>
@@ -27,7 +30,7 @@ const TourCard = ({ tour }) => (
       }}>
         €{Number(tour.price).toLocaleString("en", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </div>
-      <div style={{ fontSize: 11, color: C.inkLight, marginTop: 2 }}>per person</div>
+      <div style={{ fontSize: 11, color: C.inkLight, marginTop: 2 }}>par personne</div>
     </div>
   </div>
 );

@@ -25,7 +25,7 @@ const TravelCard = ({ travel, onClick }) => (
       padding: "28px 24px 24px",
     }}>
       <Badge color={C.goldLight} bg="rgba(200,146,26,0.25)">
-        {travel.number_of_days}d / {travel.number_of_nights}n
+        {travel.number_of_days}j / {travel.number_of_nights}n
       </Badge>
       <h3 style={{
         fontFamily: "'Playfair Display', Georgia, serif",
@@ -41,11 +41,11 @@ const TravelCard = ({ travel, onClick }) => (
           ? travel.description.length > 120
             ? travel.description.slice(0, 120) + "…"
             : travel.description
-          : "No description available."}
+          : "Aucune description disponible."}
       </p>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span style={{ fontSize: 12, color: C.inkLight, fontStyle: "italic" }}>/{travel.slug}</span>
-        <span style={{ fontSize: 13, color: C.gold, fontWeight: 600 }}>View tours →</span>
+        <span style={{ fontSize: 13, color: C.gold, fontWeight: 600 }}>Voir les circuits →</span>
       </div>
     </div>
   </div>

@@ -5,8 +5,8 @@ const Header = ({ page, onNavigate }) => {
   const { user, logout, isEditor } = useAuth();
 
   const navItems = [
-    { id: "travels", label: "Travels" },
-    ...(isEditor ? [{ id: "admin", label: "Admin" }] : []),
+    { id: "travels", label: "Voyages" },
+    ...(isEditor ? [{ id: "admin", label: "Administration" }] : []),
   ];
 
   const handleLogout = async () => {
@@ -65,7 +65,7 @@ const Header = ({ page, onNavigate }) => {
               borderRadius: 6, marginLeft: 8,
             }}
           >
-            Log out
+            Se déconnecter
           </button>
         ) : (
           <button
@@ -78,7 +78,7 @@ const Header = ({ page, onNavigate }) => {
               padding: "8px 18px", borderRadius: 6, marginLeft: 8,
             }}
           >
-            Sign In
+            Se connecter
           </button>
         )}
       </nav>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTravelRequest;
 use App\Http\Resources\TravelResource;
 use App\Models\Travel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TravelController extends Controller
@@ -30,5 +31,12 @@ class TravelController extends Controller
         return TravelResource::make($travel)->additional([
             'message' => 'Travel updated successfully.',
         ]);
+    }
+
+    public function destroy(Travel $travel): JsonResponse
+    {
+        $travel->delete();
+
+        return response()->json(['message' => 'Travel deleted successfully.'], 200);
     }
 }

@@ -58,9 +58,9 @@ const AppInner = () => {
         {page === "admin" && !isEditor && (
           <div style={{ textAlign: "center", padding: "80px 20px" }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: C.ink }}>
-              Access Restricted
+              Accès Restreint
             </h3>
-            <p style={{ color: C.inkMid }}>Please sign in with an editor or admin account.</p>
+            <p style={{ color: C.inkMid }}>Veuillez vous connecter avec un compte éditeur ou administrateur.</p>
             <button
               onClick={() => navigate("login")}
               style={{
@@ -71,7 +71,7 @@ const AppInner = () => {
                 padding: "10px 24px", borderRadius: 6,
               }}
             >
-              Sign In
+              Se connecter
             </button>
           </div>
         )}

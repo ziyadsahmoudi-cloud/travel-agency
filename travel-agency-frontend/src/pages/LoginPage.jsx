@@ -20,7 +20,7 @@ const LoginPage = ({ onSuccess, onBrowse }) => {
       login(data.data, data.authorization.token);
       onSuccess();
     } catch (e) {
-      setError(e.message || "Invalid credentials.");
+      setError(e.message || "Identifiants invalides.");
     } finally {
       setLoading(false);
     }
@@ -44,13 +44,13 @@ const LoginPage = ({ onSuccess, onBrowse }) => {
           fontFamily: "'Crimson Pro', Georgia, serif",
         }}
       >
-        ← Browse Travels
+        ← Parcourir les voyages
       </button>
 
       <div style={{ width: "100%", maxWidth: 400 }}>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <div style={{ fontSize: 13, letterSpacing: "0.25em", color: C.gold, textTransform: "uppercase", marginBottom: 10 }}>
-            Welcome back
+            Bon retour
           </div>
           <h1 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
@@ -66,14 +66,14 @@ const LoginPage = ({ onSuccess, onBrowse }) => {
           padding: 32, display: "flex", flexDirection: "column", gap: 18,
         }}>
           <Input
-            label="Email"
+            label="E-mail"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={handleKey}
           />
           <Input
-            label="Password"
+            label="Mot de passe"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -81,10 +81,10 @@ const LoginPage = ({ onSuccess, onBrowse }) => {
           />
           {error && <p style={{ margin: 0, fontSize: 13, color: C.danger }}>{error}</p>}
           <Button onClick={submit} disabled={loading} size="lg" fullWidth>
-            {loading ? "Signing in…" : "Sign In"}
+            {loading ? "Connexion en cours…" : "Se connecter"}
           </Button>
           <p style={{ margin: 0, fontSize: 12, color: C.inkLight, textAlign: "center" }}>
-            Default credentials: admin@example.com / password
+            Identifiants par défaut : admin@example.com / password
           </p>
         </div>
       </div>

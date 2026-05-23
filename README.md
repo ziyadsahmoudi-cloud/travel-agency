@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Travel Agency Example Project using Laravel 12
 
 This is an example project for a Travel Agency. Laravel 12 is used as framework.
@@ -99,3 +100,6 @@ At the end, the project should have:
 - Launch `http://localhost:8000/api/v1/travels` in your browser
 - You can login as admin to manage data with default credentials `admin@example.com` - `password`
 - Tests can be run by typing: `./dock pest --parallel`
+=======
+# travel-agency
+>>>>>>> 800a4061d0b2cc6b17c8645b18ff71cdc55bc288

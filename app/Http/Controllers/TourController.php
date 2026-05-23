@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTourRequest;
 use App\Http\Requests\TourListRequest;
 use App\Http\Resources\TourResource;
+use App\Models\Tour;
 use App\Models\Travel;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TourController extends Controller
 {
     public function index(Travel $travel, TourListRequest $request): JsonResource
     {
-        $tours = $travel->tours()
+        $tours = $travel->tours()->withCount('travelers')
             ->when(
                 $request->validated('priceFrom'),
                 fn ($query, string $priceFrom) => $query->priceFrom($priceFrom)
@@ -49,5 +51,21 @@ class TourController extends Controller
         return TourResource::make($tour)->additional([
             'message' => 'Tour created successfully.',
         ]);
+    }
+
+    public function update(Travel $travel, Tour $tour, StoreTourRequest $request): JsonResource
+    {
+        $tour->update($request->validated());
+
+        return TourResource::make($tour)->additional([
+            'message' => 'Tour updated successfully.',
+        ]);
+    }
+
+    public function destroy(Travel $travel, Tour $tour): JsonResponse
+    {
+        $tour->delete();
+
+        return response()->json(['message' => 'Tour deleted successfully.'], 200);
     }
 }

@@ -33,16 +33,16 @@ const TravelsPage = ({ onSelectTravel }) => {
         padding: "56px 32px 48px", textAlign: "center",
       }}>
         <p style={{ fontSize: 13, letterSpacing: "0.2em", color: C.goldLight, textTransform: "uppercase", margin: "0 0 12px" }}>
-          Curated journeys worldwide
+          Des voyages sur mesure à travers le monde
         </p>
         <h1 style={{
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: 52, color: C.white, margin: 0, lineHeight: 1.1,
         }}>
-          Discover the World
+          Découvrez le monde
         </h1>
         <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 17, maxWidth: 480, margin: "16px auto 0", lineHeight: 1.65 }}>
-          Handcrafted travel experiences with carefully planned tours and transparent pricing.
+          Des expériences de voyage artisanales avec des circuits soigneusement planifiés et des prix transparents.
         </p>
       </div>
 
@@ -50,13 +50,13 @@ const TravelsPage = ({ onSelectTravel }) => {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 32px 80px" }}>
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontSize: 12, letterSpacing: "0.2em", color: C.gold, textTransform: "uppercase", marginBottom: 8 }}>
-            Explore the world
+            Explorez le monde
           </div>
           <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 36, margin: 0, color: C.ink }}>
-            Our Travels
+            Nos voyages
           </h2>
           <p style={{ color: C.inkMid, marginTop: 8 }}>
-            Discover curated travel experiences from around the globe.
+            Découvrez des expériences de voyage sur mesure à travers le monde.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ const TravelsPage = ({ onSelectTravel }) => {
           <>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 24 }}>
               {travels.length === 0 && (
-                <p style={{ color: C.inkLight }}>No public travels available yet.</p>
+                <p style={{ color: C.inkLight }}>Aucun voyage public disponible pour le moment.</p>
               )}
               {travels.map((t) => (
                 <TravelCard key={t.id} travel={t} onClick={onSelectTravel} />

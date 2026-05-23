@@ -59,13 +59,13 @@ const ToursPage = ({ travel, onBack }) => {
           fontFamily: "'Crimson Pro', Georgia, serif",
         }}
       >
-        ← Back to Travels
+        ← Retour aux voyages
       </button>
 
       {/* Travel header */}
       <div style={{ marginBottom: 28 }}>
         <div style={{ fontSize: 12, letterSpacing: "0.2em", color: C.gold, textTransform: "uppercase", marginBottom: 6 }}>
-          {travel.number_of_days} days · {travel.number_of_nights} nights
+          {travel.number_of_days} jours · {travel.number_of_nights} nuits
         </div>
         <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 32, margin: 0, color: C.ink }}>
           {travel.name}
@@ -80,22 +80,22 @@ const ToursPage = ({ travel, onBack }) => {
       {/* Filter bar */}
       <div style={{ background: C.sand, borderRadius: 10, padding: "20px 24px", marginBottom: 28 }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: C.inkMid, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 14 }}>
-          Filter Tours
+          Filtrer les circuits
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 12 }}>
-          <Input label="Price from (€)" type="number" value={filters.priceFrom} onChange={setFilter("priceFrom")} />
-          <Input label="Price to (€)" type="number" value={filters.priceTo} onChange={setFilter("priceTo")} />
-          <Input label="Date from" type="date" value={filters.dateFrom} onChange={setFilter("dateFrom")} />
-          <Input label="Date to" type="date" value={filters.dateTo} onChange={setFilter("dateTo")} />
-          <Select label="Sort by price" value={filters.sortPrice} onChange={setFilter("sortPrice")}>
-            <option value="">Default</option>
-            <option value="asc">Price ↑</option>
-            <option value="desc">Price ↓</option>
+          <Input label="Prix de (€)" type="number" value={filters.priceFrom} onChange={setFilter("priceFrom")} />
+          <Input label="Prix à (€)" type="number" value={filters.priceTo} onChange={setFilter("priceTo")} />
+          <Input label="Date de début" type="date" value={filters.dateFrom} onChange={setFilter("dateFrom")} />
+          <Input label="Date de fin" type="date" value={filters.dateTo} onChange={setFilter("dateTo")} />
+          <Select label="Trier par prix" value={filters.sortPrice} onChange={setFilter("sortPrice")}>
+            <option value="">Par défaut</option>
+            <option value="asc">Prix ↑</option>
+            <option value="desc">Prix ↓</option>
           </Select>
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-          <Button onClick={applyFilters} size="sm">Apply Filters</Button>
-          <Button onClick={resetFilters} variant="outline" size="sm">Reset</Button>
+          <Button onClick={applyFilters} size="sm">Appliquer les filtres</Button>
+          <Button onClick={resetFilters} variant="outline" size="sm">Réinitialiser</Button>
         </div>
       </div>
 
@@ -104,7 +104,7 @@ const ToursPage = ({ travel, onBack }) => {
         <>
           {tours.length === 0 && (
             <p style={{ color: C.inkLight, textAlign: "center", padding: "40px 0" }}>
-              No tours match your filters.
+              Aucun circuit ne correspond à vos filtres.
             </p>
           )}
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>

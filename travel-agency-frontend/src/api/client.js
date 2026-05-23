@@ -26,6 +26,9 @@ export const createTravel = (data, token) =>
 export const updateTravel = (slug, data, token) =>
   api(`/editor/travels/${slug}/update`, { method: "PATCH", body: JSON.stringify(data) }, token);
 
+export const deleteTravel = (slug, token) =>
+  api(`/admin/travels/${slug}`, { method: "DELETE" }, token);
+
 // Tours
 export const getTours = (slug, params = {}, page = 1, token = null) => {
   const query = new URLSearchParams({ page });
@@ -38,6 +41,22 @@ export const createTour = (travelSlug, data, token) =>
     method: "POST",
     body: JSON.stringify(data),
   }, token);
+
+export const updateTour = (travelSlug, tourId, data, token) =>
+  api(`/admin/travels/${travelSlug}/tours/${tourId}/update`, { method: "PATCH", body: JSON.stringify(data) }, token);
+
+export const deleteTour = (travelSlug, tourId, token) =>
+  api(`/admin/travels/${travelSlug}/tours/${tourId}`, { method: "DELETE" }, token);
+
+// Travelers
+export const getTravelers = (tourId, token) =>
+  api(`/admin/tours/${tourId}/travelers`, {}, token);
+
+export const createTraveler = (tourId, data, token) =>
+  api(`/admin/tours/${tourId}/travelers`, { method: "POST", body: JSON.stringify(data) }, token);
+
+export const deleteTraveler = (tourId, travelerId, token) =>
+  api(`/admin/tours/${tourId}/travelers/${travelerId}`, { method: "DELETE" }, token);
 
 // Users
 export const createUser = (data, token) =>

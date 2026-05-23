@@ -12,10 +12,10 @@ const Pagination = ({ meta, onPage }) => {
         disabled={meta.current_page === 1}
         onClick={() => onPage(meta.current_page - 1)}
       >
-        ← Prev
+        ← Précédent
       </Button>
       <span style={{ fontSize: 13, color: C.inkMid }}>
-        Page {meta.current_page} of {meta.last_page}
+        Page {meta.current_page} sur {meta.last_page}
       </span>
       <Button
         variant="outline"
@@ -23,7 +23,7 @@ const Pagination = ({ meta, onPage }) => {
         disabled={meta.current_page === meta.last_page}
         onClick={() => onPage(meta.current_page + 1)}
       >
-        Next →
+        Suivant →
       </Button>
     </div>
   );

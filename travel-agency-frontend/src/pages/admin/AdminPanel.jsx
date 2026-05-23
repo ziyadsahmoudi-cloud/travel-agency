@@ -6,9 +6,9 @@ import AdminUsers from "./AdminUsers";
 import { C } from "../../theme";
 
 const TABS = [
-  { id: "travels", label: "Travels", adminOnly: false },
-  { id: "tours", label: "Tours", adminOnly: false },
-  { id: "users", label: "Users", adminOnly: true },
+  { id: "travels", label: "Voyages", adminOnly: false },
+  { id: "tours", label: "Circuits", adminOnly: false },
+  { id: "users", label: "Utilisateurs", adminOnly: true },
 ];
 
 const AdminPanel = ({ toast }) => {
@@ -22,13 +22,13 @@ const AdminPanel = ({ toast }) => {
       {/* Page header */}
       <div style={{ marginBottom: 28 }}>
         <div style={{ fontSize: 12, letterSpacing: "0.2em", color: C.gold, textTransform: "uppercase", marginBottom: 6 }}>
-          Management
+          Gestion
         </div>
         <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 32, margin: 0, color: C.ink }}>
-          Admin Panel
+          Panneau d'administration
         </h2>
         <p style={{ color: C.inkMid, marginTop: 6 }}>
-          Logged in as <strong>{user?.name}</strong>
+          Connecté en tant que <strong>{user?.name}</strong>
           {" · "}
           <span style={{ color: C.teal, fontWeight: 600 }}>
             {user?.role?.map((r) => r.name).join(", ")}
